@@ -34,6 +34,7 @@ from src.kwaliteit import (
 )
 from src.ophalen import haal_teksten_op, schrijf_documenten_csv
 from src.regionaal import schrijf_gr_deelnemers_csv, voeg_regionale_regelingen_toe_aan_inventaris
+from src.termen import analyseer_termen, schrijf_termenverkenning_xlsx
 from src.parsen import parse_alle_documenten, schrijf_parse_fouten_csv, schrijf_passages_csv
 from src.rapportage_selectie import (
     schrijf_gemeenten_zonder_nadere_regels,
@@ -168,6 +169,15 @@ def draai_bijlagen(config: dict):
                  len(status_rijen), n_ok, n_scan, n_fout, len(passages))
 
 
+def draai_termen(config: dict):
+    logging.info("Termenverkenning (stap 7) gestart")
+    resultaat = analyseer_termen(config)
+    schrijf_termenverkenning_xlsx(config, resultaat)
+    for thema, rijen in resultaat.items():
+        for r in rijen:
+            logging.info("  [%s] %s: %d gemeenten, %d passages", thema, r["term"], r["n_gemeenten"], r["n_passages"])
+
+
 def main():
     parser = argparse.ArgumentParser(description="CVDR-corpus Wmo-mantelzorg pijplijn")
     parser.add_argument("--stap", choices=STAPPEN, help="voer één stap uit")
@@ -200,6 +210,8 @@ def main():
         draai_kwaliteit(config)
     elif args.stap == "bijlagen":
         draai_bijlagen(config)
+    elif args.stap == "termen":
+        draai_termen(config)
     elif args.alles:
         logging.error("--alles is nog niet geimplementeerd (stappen worden stap-voor-stap gebouwd)")
         sys.exit(1)

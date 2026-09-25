@@ -1,0 +1,27 @@
+2026-09-25 16:36:22,409 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 16:36:22,410 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260925_163622.log
+2026-09-25 16:36:22,410 | INFO | Termenverkenning (stap 7) gestart
+2026-09-25 16:37:10,231 | INFO |   [Positie] mantelzorger + (betrokken|betrekken|uitgenodigd|aanwezig|gesprek|onderzoek): 339 gemeenten, 3516 passages
+2026-09-25 16:37:10,233 | INFO |   [Positie] cliëntondersteuning: 336 gemeenten, 2519 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] belastbaarheid: 283 gemeenten, 916 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] overbelast*: 342 gemeenten, 4736 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] draagkracht: 338 gemeenten, 3196 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] draaglast: 266 gemeenten, 1079 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] (dreigende) overbelasting: 330 gemeenten, 1921 passages
+2026-09-25 16:37:10,233 | INFO |   [Draagkracht] huisarts|medisch advies: 342 gemeenten, 5830 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] ondersteuning van de mantelzorger: 243 gemeenten, 410 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] respijt*: 322 gemeenten, 1992 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] logeer*: 302 gemeenten, 1330 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] dagbesteding: 340 gemeenten, 7514 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] mantelzorgondersteuning: 219 gemeenten, 803 passages
+2026-09-25 16:37:10,233 | INFO |   [Behoeften] steunpunt: 172 gemeenten, 600 passages
+2026-09-25 16:37:10,233 | INFO |   [Instrumenten] EDIZ: 14 gemeenten, 14 passages
+2026-09-25 16:37:10,233 | INFO |   [Instrumenten] zelfredzaamheidsmatrix|ZRM: 110 gemeenten, 470 passages
+2026-09-25 16:37:10,233 | INFO |   [Instrumenten] vragenlijst: 149 gemeenten, 294 passages
+2026-09-25 16:37:10,233 | INFO |   [Instrumenten] gespreksleidraad: 2 gemeenten, 3 passages
+2026-09-25 16:37:10,233 | INFO |   [Instrumenten] checklist: 100 gemeenten, 226 passages
+2026-09-25 16:37:10,233 | INFO |   [Jonge mantelzorgers] jonge mantelzorger*: 99 gemeenten, 282 passages
+2026-09-25 16:37:10,233 | INFO |   [Jonge mantelzorgers] kinderen + gebruikelijke hulp: 335 gemeenten, 2789 passages
+2026-09-25 16:37:10,233 | INFO |   [Jonge mantelzorgers] inwonende kinderen: 330 gemeenten, 1390 passages
+2026-09-25 16:37:10,233 | INFO |   [Kader] gelijkgericht*: 2 gemeenten, 2 passages
+2026-09-25 16:37:10,233 | INFO |   [Kader] mantelzorgagenda: 4 gemeenten, 17 passages
