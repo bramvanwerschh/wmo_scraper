@@ -1,0 +1,10 @@
+2026-09-25 10:54:06,429 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 10:54:06,429 | INFO | Logbestand: /Users/bramvanwersch/Desktop/wmo_scraper/logs/run_20260925_105406.log
+2026-09-25 10:54:06,429 | INFO | Stap 4 (ophalen) gestart
+2026-09-25 10:59:10,551 | INFO |   200/5815 verwerkt (0 fouten tot nu toe)
+2026-09-25 11:03:49,048 | INFO |   400/5815 verwerkt (1 fouten tot nu toe)
+2026-09-25 11:08:35,604 | INFO |   600/5815 verwerkt (5 fouten tot nu toe)
+2026-09-25 11:14:39,986 | INFO |   800/5815 verwerkt (5 fouten tot nu toe)
+2026-09-25 11:19:25,460 | INFO |   1000/5815 verwerkt (9 fouten tot nu toe)
+2026-09-25 11:55:05,573 | INFO |   1200/5815 verwerkt (10 fouten tot nu toe)
+2026-09-25 12:00:08,924 | INFO |   1400/5815 verwerkt (11 fouten tot nu toe)

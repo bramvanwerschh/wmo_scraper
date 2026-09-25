@@ -1,0 +1,73 @@
+# Configuratie CVDR-corpus Wmo-mantelzorg
+# Geen zoektermen of selectieregels hardcoden in de code — alles hier.
+
+peildatum: "2026-10-01"
+
+contact_email: "bramvanwerschh@gmail.com"
+user_agent: "wmo-mantelzorg-onderzoek/0.1 (contact: bramvanwerschh@gmail.com)"
+
+scrapen:
+  rate_limit_seconds: 1.0
+  max_retries: 3
+  backoff_seconds: 2.0
+  timeout_seconds: 30
+
+sru:
+  base_url: "https://zoekservice.overheid.nl/sru/Search"
+  x_connection: "cvdr"
+  maximum_records: 1000
+
+paden:
+  gemeenten_csv: "data/gemeenten.csv"
+  inventaris_csv: "data/inventaris.csv"
+  selectie_csv: "data/selectie.csv"
+  documenten_csv: "data/documenten.csv"
+  passages_csv: "data/passages.csv"
+  raw_zoek: "data/raw/zoek"
+  raw_docs: "data/raw/docs"
+  rapportage: "data/rapportage"
+  logs: "logs"
+
+pilot_gemeenten:
+  - "'s-Gravenhage"
+  - "Aa en Hunze"
+  - "Tiel"
+
+# Vangnettermen (§7 stap 2 van het plan). Wildcard "*" ondersteund door de SRU-index (geverifieerd).
+# Meerwoordtermen tussen aanhalingstekens = exacte zin (frase-zoeken, CQL "adj").
+# overbelast* en belastbaarheid verwijderd op verzoek van Bram (2026-09-25): dit zijn
+# analyse-termen (horen bij de latere codering), geen ophaal/selectie-termen, en gaven
+# bovendien veel kruisdomein-ruis (bijv. "Voorbeschermingsregels ..." uit de ruimtelijke
+# ordening, 609 documenten, matchten puur op het woord "overbelast").
+vangnet_termen:
+  - "mantelzorg*"
+  - "\"gebruikelijke hulp\""
+  - "\"gebruikelijke zorg\""
+  - "keukentafelgesprek"
+
+# Selectieregels (§7 stap 3 van de opdracht). Eerste match wint, volgorde van de groepen
+# hieronder is betekenisvol (ruis eerst, kern vóór jeugd voor gecombineerde titels).
+# Wordt in dit checkpoint door Bram gecontroleerd en zo nodig aangepast.
+selectie:
+  ruis_titel:
+    - "parkeer"
+    - "milieuzone|zero-emissie"
+    - "omgevingsplan|omgevingsvisie|bestemmingsplan"
+    - "huisvesting|urgentie"
+    - "afval|reiniging|begraaf|leges|precario|\\bbelasting(en)?\\b"
+    - "algemene plaatselijke verordening|\\bapv\\b"
+    - "minima|kwijtschelding|participatiewet|re-integratie"
+  waardering_titel:
+    - "mantelzorg(waardering|compliment|blijk)"
+  aanbod_titel:
+    - "subsidie"
+  kern_titel:
+    - "maatschappelijke ondersteuning"
+    - "\\bwmo\\b"
+    - "sociaal domein|domein sociaal"
+    - "gebruikelijke (hulp|zorg)"
+    - "huishoudelijke (hulp|ondersteuning)"
+    - "hulp bij (het )?huishouden"
+    - "mantelzorg"
+  jeugd_titel:
+    - "jeugdhulp|jeugdwet|\\bjeugd\\b"

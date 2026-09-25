@@ -1,0 +1,4 @@
+2026-09-25 16:20:26,202 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 16:20:26,202 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260925_162026.log
+2026-09-25 16:20:26,202 | INFO | Bijlagen (pdf) gestart
+2026-09-25 16:21:33,253 | INFO | Bijlagen klaar: 50 bijlagen (47 ok, 3 scans zonder tekstlaag, 0 fouten), 1781 passages

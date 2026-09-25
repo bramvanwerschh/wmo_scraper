@@ -1,0 +1,5 @@
+2026-09-25 16:27:38,606 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 16:27:38,606 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260925_162738.log
+2026-09-25 16:27:38,606 | INFO | Stap 5 (parsen) gestart
+2026-09-25 16:28:01,390 | INFO | Parsen klaar: 455968 passages uit 5880 documenten, 128 parse-fouten/0-artikeldocumenten (2.18%)
+2026-09-25 16:28:01,390 | WARNING | BOVEN DE 2%%-MARGE UIT DE OPDRACHT (stap 5) -- melden aan Bram.

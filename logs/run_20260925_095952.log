@@ -1,0 +1,8 @@
+2026-09-25 09:59:52,470 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 09:59:52,470 | INFO | Logbestand: /Users/bramvanwersch/Desktop/wmo_scraper/logs/run_20260925_095952.log
+2026-09-25 09:59:52,471 | INFO | Pilotmodus actief voor: ["'s-Gravenhage", 'Aa en Hunze', 'Tiel']
+2026-09-25 09:59:53,398 | INFO | Inventaris gestart voor 3 gemeente(n)
+2026-09-25 10:00:25,616 | INFO | Inventaris klaar: 1058 regelingen over 3 gemeente(n)
+2026-09-25 10:00:25,617 | INFO |   GM1680: 198 regelingen
+2026-09-25 10:00:25,617 | INFO |   GM0518: 578 regelingen
+2026-09-25 10:00:25,617 | INFO |   GM0281: 282 regelingen

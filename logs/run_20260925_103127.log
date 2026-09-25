@@ -1,0 +1,10 @@
+2026-09-25 10:31:27,481 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-25 10:31:27,482 | INFO | Logbestand: /Users/bramvanwersch/Desktop/wmo_scraper/logs/run_20260925_103127.log
+2026-09-25 10:31:30,439 | INFO | Selectie klaar: 87034 regelingen geclassificeerd
+2026-09-25 10:31:30,439 | INFO |   ruis: 74446
+2026-09-25 10:31:30,439 | INFO |   aanbod: 6988
+2026-09-25 10:31:30,440 | INFO |   kern: 2345
+2026-09-25 10:31:30,440 | INFO |   twijfel: 2215
+2026-09-25 10:31:30,440 | INFO |   jeugd: 990
+2026-09-25 10:31:30,440 | INFO |   waardering: 50
+2026-09-25 10:31:30,440 | INFO | Gemeenten zonder kern-verordening: 4
