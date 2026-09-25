@@ -86,8 +86,14 @@ def _tekst_van_table(table):
     return "\n".join(regels)
 
 
-def _tekst_van(el):
-    """Platte tekst van el en nakomelingen, met behoud van opsommingstekens (li[@nr])."""
+def _tekst_van(el, negeer_tabellen=False):
+    """Platte tekst van el en nakomelingen, met behoud van opsommingstekens (li[@nr]).
+    negeer_tabellen=True: sla <table>-inhoud over (die wordt dan apart als eigen
+    bijlage-passage vastgelegd, bijv. bij een tabel die per ongeluk genest zit in
+    <regeling-sluiting>, gevonden bij CVDR708764 -- anders staat de tabel dubbel/
+    verkeerd gelabeld in de Ondertekening-tekst)."""
+    if _tag(el) == "table":
+        return "" if negeer_tabellen else _tekst_van_table(el)
     delen = []
     if el.text and el.text.strip():
         delen.append(el.text.strip())
@@ -99,14 +105,15 @@ def _tekst_van(el):
             continue
         if tag == "li":
             nr = kind.attrib.get("nr", "")
-            inhoud = _tekst_van(kind)
+            inhoud = _tekst_van(kind, negeer_tabellen)
             delen.append(f"{nr} {inhoud}".strip())
         elif tag == "table":
-            sub = _tekst_van_table(kind)
-            if sub:
-                delen.append(sub)
+            if not negeer_tabellen:
+                sub = _tekst_van_table(kind)
+                if sub:
+                    delen.append(sub)
         else:
-            sub = _tekst_van(kind)
+            sub = _tekst_van(kind, negeer_tabellen)
             if sub:
                 delen.append(sub)
         if kind.tail and kind.tail.strip():
@@ -161,22 +168,38 @@ def domein_hint_van_wet_label(label: str) -> str:
 # --------------------------------------------------------------------------------
 
 def _emfasis_tekst(el):
-    """Als <al> een enkel <vet>/<cursief>/<onderstreept>-kind heeft dat de kop vormt
-    (met evt. tekst erna in dezelfde <al>), geeft (koptekst, resttekst) terug."""
+    """Als <al> één of meer <vet>/<cursief>/<onderstreept>-kinderen heeft die samen de
+    kop vormen (met evt. tekst erna in dezelfde <al>), geeft (koptekst, resttekst)
+    terug. Meerdere sibling-emfasis-elementen komen voor (bijv. een figuurbijschrift
+    opgeknipt in <cursief>Figuur 3: ...</cursief><cursief>Wmo</cursief><cursief> 2015
+    ...</cursief>, gevonden bij CVDR706109) -- die worden allemaal samengevoegd,
+    anders gaat het deel na de eerste run verloren."""
     if _tag(el) != "al":
         return None
-    for tagnaam in ("vet", "cursief", "onderstreept"):
-        emf = el.find(f"{{*}}{tagnaam}")
-        if emf is not None and emf.text and emf.text.strip():
-            koptekst = emf.text.strip()
-            rest = _strip_voorloop((emf.tail or "").strip())
-            return koptekst, rest
-    return None
+    emfasis_kinderen = [k for k in el if _tag(k) in ("vet", "cursief", "onderstreept")]
+    if not emfasis_kinderen:
+        return None
+    delen = []
+    for i, k in enumerate(emfasis_kinderen):
+        stuk = _tekst_van(k)
+        if stuk:
+            delen.append(stuk)
+        if i < len(emfasis_kinderen) - 1 and k.tail and k.tail.strip():
+            delen.append(k.tail.strip())
+    koptekst = "".join(delen).strip()
+    if not koptekst:
+        return None
+    rest = _strip_voorloop((emfasis_kinderen[-1].tail or "").strip())
+    return koptekst, rest
 
 
 def _is_kop_kandidaat(tekst: str) -> bool:
+    """Een kop is nooit een complete zin. Een zin die eindigt op ':' loopt door in wat
+    volgt (bijv. "Artikel 4.1.1 van de Jeugdwet luidt als volgt:") en is dus, ook al
+    matcht hij toevallig het artikelkop-patroon, GEEN kop maar content -- anders gaat
+    die tekst verloren (gevonden bij CVDR706109, conservatiecheck-onderzoek)."""
     t = tekst.strip()
-    return bool(t) and len(t) < KORTE_KOP_MAX_LENGTE and not t.endswith(".")
+    return bool(t) and len(t) < KORTE_KOP_MAX_LENGTE and not t.endswith((".", ":"))
 
 
 def _classificeer_kop(koptekst: str) -> str:
@@ -198,7 +221,8 @@ def _detecteer_kop(el):
     emf = _emfasis_tekst(el)
     if emf is not None:
         koptekst, rest = emf
-        if _is_kop_kandidaat(koptekst) or ARTIKEL_KOP_TEKST_PATROON.match(koptekst):
+        kop_kandidaat = (_is_kop_kandidaat(koptekst) or ARTIKEL_KOP_TEKST_PATROON.match(koptekst))
+        if kop_kandidaat and not koptekst.rstrip().endswith(":"):
             return _classificeer_kop(koptekst), koptekst, rest
         return None
     # geen opmaak: alleen als de hele <al> kort is en een cijfer- of subkop-patroon heeft
@@ -589,6 +613,7 @@ def _parse_toelichting(nt, ctx, passages):
             huidig_koppeling = "geen"
             huidig_sub = ""
             huidig_kop = kop
+            huidig_kop = kop
         elif koptype == "subkop":
             huidig_sub = kop
             huidig_kop = kop
@@ -656,14 +681,29 @@ def parse_document(xml_pad, cvdr_id, versie, gemeente_code, categorie) -> list[d
 
     sluiting = root.find(".//{*}regeling-sluiting")
     if sluiting is not None:
-        tekst = _tekst_van(sluiting)
+        # Punt 4 (verbeterronde 3): een <table> die (per ongeluk) genest zit binnen
+        # <regeling-sluiting>/<slotformulering> hoort niet in de Ondertekening-tekst
+        # maar is eigenlijk bijlage-achtige inhoud -- apart gelabeld als sectietype='bijlage'.
+        for i, tabel in enumerate(sluiting.findall(".//{*}table"), 1):
+            tabel_tekst = _tekst_van_table(tabel)
+            pid = f"{cvdr_id}_{versie}__bijlage_in_sluiting__{i}"
+            _voeg_toe(passages, _maak_passage(
+                ctx, pid, "Bijlage (genest in ondertekening)", "", "", "", "",
+                "bijlage", ctx.doc_domein_hint, tabel_tekst,
+            ))
+
+        tekst = _tekst_van(sluiting, negeer_tabellen=True)
         pid = f"{cvdr_id}_{versie}__ondertekening__{ctx.volgorde + 1}"
         _voeg_toe(passages, _maak_passage(
             ctx, pid, "Ondertekening", "", "", "", "", "ondertekening", ctx.doc_domein_hint, tekst,
         ))
 
-    nt = root.find(".//{*}nota-toelichting")
-    if nt is not None:
+    # Sommige documenten (40 van 5.835, steekproefsgewijs vastgesteld) hebben MEERDERE
+    # <nota-toelichting>-elementen als sibling van <regeling-tekst> -- vaak een lege
+    # placeholder plus de echte, substantiële toelichting. .find() pakte voorheen
+    # alleen de eerste (soms de lege), waardoor tot ~44.000 tekens verloren gingen
+    # bij één enkel document (CVDR635708). Nu worden ze allemaal verwerkt.
+    for nt in root.findall(".//{*}nota-toelichting"):
         _parse_toelichting(nt, ctx, passages)
 
     # Punt 4: fallback domein_hint (wet_label > hoofdstuk/paragraaf > documenttitel)

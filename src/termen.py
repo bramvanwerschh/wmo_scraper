@@ -1,10 +1,16 @@
-"""Stap 7: termenverkenning. Telt en toont voorbeelden, interpreteert niet."""
+"""Stap 7: termenverkenning. Telt en toont voorbeelden, interpreteert niet.
+
+Twee kolomsets per term (verzoek Bram, verbeterronde 3): (a) heel corpus, (b) FILTER
+= categorie in (kern, waardering), domein_hint in (wmo, beide), sectietype niet in
+(begrippen, bijlage, ondertekening, aanhef) -- dat is het deel dat het meest
+waarschijnlijk relevant is voor de latere codering.
+"""
 
 import csv
 import random
 import re
 import sys
-from collections import Counter, defaultdict
+from collections import Counter
 
 import openpyxl
 
@@ -12,7 +18,6 @@ from src.config import ROOT
 
 csv.field_size_limit(sys.maxsize)
 
-# Startlijst (§7 stap 7 van de opdracht). "term1 + term2" = combinatie (AND).
 STARTLIJST = {
     "Positie": [
         "mantelzorger + (betrokken|betrekken|uitgenodigd|aanwezig|gesprek|onderzoek)",
@@ -37,10 +42,20 @@ STARTLIJST = {
     ],
 }
 
+FILTER_CATEGORIEEN = {"kern", "waardering"}
+FILTER_DOMEIN_HINTS = {"wmo", "beide"}
+FILTER_UITGESLOTEN_SECTIETYPES = {"begrippen", "bijlage", "bijlage_pdf", "ondertekening", "aanhef"}
+
+
+def _in_filter(p: dict) -> bool:
+    return (
+        p["categorie"] in FILTER_CATEGORIEEN
+        and p["domein_hint"] in FILTER_DOMEIN_HINTS
+        and p["sectietype"] not in FILTER_UITGESLOTEN_SECTIETYPES
+    )
+
 
 def _term_naar_patroon(term: str) -> list[re.Pattern]:
-    """Eén term kan een combinatie zijn ('a + b'): geeft een lijst regex terug die
-    ALLEMAAL moeten matchen (AND). '*' = woorddeel-wildcard, '|' = OR binnen een deel."""
     delen = [d.strip() for d in term.split("+")]
     patronen = []
     for deel in delen:
@@ -57,6 +72,8 @@ def _matcht(tekst: str, patronen: list[re.Pattern]) -> bool:
 def analyseer_termen(config: dict, seed: int = 20260925) -> dict:
     with open(ROOT / config["paden"]["passages_csv"], encoding="utf-8") as f:
         passages = list(csv.DictReader(f))
+    with open(ROOT / config["paden"]["gemeenten_csv"], encoding="utf-8") as f:
+        naam_by_code = {g["gemeente_code"]: g["gemeente_naam_cbs"] for g in csv.DictReader(f)}
 
     rng = random.Random(seed)
     resultaat = {}
@@ -64,18 +81,25 @@ def analyseer_termen(config: dict, seed: int = 20260925) -> dict:
         thema_resultaat = []
         for term in termen:
             patronen = _term_naar_patroon(term)
-            treffers = [p for p in passages if _matcht(p["tekst"], patronen)]
-            gemeenten = {p["gemeente_code"] for p in treffers}
-            sectietype_verdeling = Counter(p["sectietype"] for p in treffers)
-            domein_verdeling = Counter(p["domein_hint"] for p in treffers)
-            voorbeelden = rng.sample(treffers, min(5, len(treffers)))
+            treffers_corpus = [p for p in passages if _matcht(p["tekst"], patronen)]
+            treffers_filter = [p for p in treffers_corpus if _in_filter(p)]
+
+            voorbeelden = rng.sample(treffers_filter, min(5, len(treffers_filter)))
+            for v in voorbeelden:
+                v["_gemeente_naam"] = naam_by_code.get(v["gemeente_code"], v["gemeente_code"])
+
             thema_resultaat.append({
                 "term": term,
-                "n_gemeenten": len(gemeenten),
-                "n_passages": len(treffers),
-                "sectietype_verdeling": sectietype_verdeling,
-                "domein_verdeling": domein_verdeling,
-                "voorbeelden": voorbeelden,
+                "corpus": {
+                    "n_gemeenten": len({p["gemeente_code"] for p in treffers_corpus}),
+                    "n_passages": len(treffers_corpus),
+                },
+                "filter": {
+                    "n_gemeenten": len({p["gemeente_code"] for p in treffers_filter}),
+                    "n_passages": len(treffers_filter),
+                    "categorie_verdeling": Counter(p["categorie"] for p in treffers_corpus),
+                    "voorbeelden": voorbeelden,
+                },
             })
         resultaat[thema] = thema_resultaat
     return resultaat
@@ -87,20 +111,30 @@ def schrijf_termenverkenning_xlsx(config: dict, resultaat: dict):
 
     for thema, rijen in resultaat.items():
         ws = wb.create_sheet(title=thema[:31])
-        ws.append(["term", "n_gemeenten", "n_passages", "sectietype_verdeling", "domein_verdeling",
-                   "voorbeeld_gemeente", "voorbeeld_pad", "voorbeeld_tekst"])
+        ws.append([
+            "term",
+            "n_gemeenten_corpus", "n_passages_corpus",
+            "n_gemeenten_filter", "n_passages_filter",
+            "categorie_verdeling (heel corpus)",
+            "voorbeeld_gemeente", "voorbeeld_pad", "voorbeeld_tekst",
+        ])
         for r in rijen:
-            sectie_str = "; ".join(f"{k}={v}" for k, v in r["sectietype_verdeling"].most_common())
-            domein_str = "; ".join(f"{k}={v}" for k, v in r["domein_verdeling"].most_common())
-            if not r["voorbeelden"]:
-                ws.append([r["term"], r["n_gemeenten"], r["n_passages"], sectie_str, domein_str, "", "", "(geen treffers)"])
+            cat_str = "; ".join(f"{k}={v}" for k, v in r["filter"]["categorie_verdeling"].most_common())
+            voorbeelden = r["filter"]["voorbeelden"]
+            basisrij = [
+                r["term"],
+                r["corpus"]["n_gemeenten"], r["corpus"]["n_passages"],
+                r["filter"]["n_gemeenten"], r["filter"]["n_passages"],
+                cat_str,
+            ]
+            if not voorbeelden:
+                ws.append(basisrij + ["", "", "(geen treffers binnen FILTER)"])
                 continue
-            for i, v in enumerate(r["voorbeelden"]):
+            for i, v in enumerate(voorbeelden):
                 if i == 0:
-                    ws.append([r["term"], r["n_gemeenten"], r["n_passages"], sectie_str, domein_str,
-                               v["gemeente_code"], v["pad"], v["tekst"][:300]])
+                    ws.append(basisrij + [v["_gemeente_naam"], v["pad"], v["tekst"][:300]])
                 else:
-                    ws.append(["", "", "", "", "", v["gemeente_code"], v["pad"], v["tekst"][:300]])
+                    ws.append(["", "", "", "", "", "", v["_gemeente_naam"], v["pad"], v["tekst"][:300]])
 
     pad = ROOT / config["paden"]["rapportage"] / "termenverkenning.xlsx"
     pad.parent.mkdir(parents=True, exist_ok=True)

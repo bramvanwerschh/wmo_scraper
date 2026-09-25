@@ -175,7 +175,9 @@ def draai_termen(config: dict):
     schrijf_termenverkenning_xlsx(config, resultaat)
     for thema, rijen in resultaat.items():
         for r in rijen:
-            logging.info("  [%s] %s: %d gemeenten, %d passages", thema, r["term"], r["n_gemeenten"], r["n_passages"])
+            logging.info("  [%s] %s: corpus %d gem./%d pass. | filter %d gem./%d pass.", thema, r["term"],
+                         r["corpus"]["n_gemeenten"], r["corpus"]["n_passages"],
+                         r["filter"]["n_gemeenten"], r["filter"]["n_passages"])
 
 
 def main():

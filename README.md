@@ -63,13 +63,17 @@ Draai dit na elke wijziging aan `src/parsen.py`.
   de `<aanhef>` staat — die blijft wel bewaard als aanhef-passage. De striktere
   maatstaf "documenten met écht nul passages van welke soort dan ook" is **0,46%**.
 - **Conservatiecheck (som van passagetekens vs. brontekst, exclusief structuurlabels):**
-  6,7% van alle documenten en 7,8% van kern+waardering zit onder 95%. Belangrijkste
-  oorzaken: (a) inhoud die in externe pdf-bijlagen staat — voor 28 kandidaten met
-  `heeft_bijlage=True` en weinig passagetekst zijn de pdf's alsnog opgehaald en als
-  `sectietype='bijlage_pdf'` toegevoegd (`data/rapportage/bijlage_pdf_status.csv`); 3
-  daarvan zijn scans zonder tekstlaag en dus **niet** verwerkt (geen OCR uitgevoerd) —
-  die blijven onvolledig; (b) documenten met veel losse `<table>`-blokken waarvan de
-  celstructuur niet altijd volledig lineariseert.
+  5,2% van alle documenten en **6,6%** van kern+waardering zit onder 95% (v1.1 — was
+  7,8% in v1.0). Belangrijkste resterende oorzaken: (a) inhoud die in externe
+  pdf-bijlagen staat — voor 28 kandidaten met `heeft_bijlage=True` en weinig
+  passagetekst zijn de pdf's alsnog opgehaald en als `sectietype='bijlage_pdf'`
+  toegevoegd (`data/rapportage/bijlage_pdf_status.csv`); 3 daarvan zijn scans zonder
+  tekstlaag en dus **niet** verwerkt (geen OCR uitgevoerd); (b) een handvol kleine
+  documenten (<5.000 brontekens) met een marginaal verschil, vermoedelijk ruis in de
+  meetmethode zelf eerder dan echt verlies. Grondig onderzocht op de 6 grootste
+  uitschieters (`logs/werklog.md`, v1.1): drie échte parserbugs gevonden en gefixt
+  (meerdere `<nota-toelichting>`-elementen per document, kop-misclassificatie van
+  zinnen eindigend op ':', meerdere opmaak-elementen als siblings binnen één `<al>`).
 - **Sittard-Geleen heeft geen enkel `kern`-document met "verordening" in de titel** op
   de peildatum (wel Beleidsregels/Besluit Wmo). Eerdere verordeningen bestonden wel
   (laatste: 2025) maar zijn kennelijk vervallen zonder vervanger. Gevlagd in
