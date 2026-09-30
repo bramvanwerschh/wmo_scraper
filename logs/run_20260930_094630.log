@@ -1,0 +1,4 @@
+2026-09-30 09:46:30,045 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-30 09:46:30,045 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260930_094630.log
+2026-09-30 09:46:30,046 | INFO | Conceptcodering (eerste-ronde, trefwoordgebaseerd) gestart
+2026-09-30 09:46:48,419 | INFO | Conceptcodering klaar: 1460/2052 gemeente-thema-combinaties 'mogelijk aanwezig' (rest niet aangetroffen). GEEN inhoudelijke codering -- zie Leeswijzer-tabblad.

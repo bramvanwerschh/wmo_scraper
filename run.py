@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from src.api import CvdrClient
+from src.codering import genereer_conceptcodering, schrijf_codering_xlsx
 from src.bijlagen import (
     haal_bijlagen_op,
     schrijf_bijlage_passages_csv,
@@ -46,7 +47,7 @@ from src.rapportage_selectie import (
 )
 from src.selectie import schrijf_conflicten_csv, schrijf_selectie_csv, selecteer
 
-STAPPEN = ["gemeenten", "inventaris", "selectie", "ophalen", "parsen", "kwaliteit", "bijlagen", "termen"]
+STAPPEN = ["gemeenten", "inventaris", "selectie", "ophalen", "parsen", "kwaliteit", "bijlagen", "termen", "codering"]
 
 
 def zet_logging_op(config: dict) -> Path:
@@ -180,6 +181,20 @@ def draai_termen(config: dict):
                          r["filter"]["n_gemeenten"], r["filter"]["n_passages"])
 
 
+def draai_codering(config: dict):
+    logging.info("Conceptcodering (eerste-ronde, trefwoordgebaseerd) gestart")
+    resultaat = genereer_conceptcodering(config)
+    schrijf_codering_xlsx(config, resultaat)
+    n_mogelijk_aanwezig = sum(
+        1 for per_thema in resultaat.values() for r in per_thema.values()
+        if r["voorgestelde_indicatie"] == "mogelijk aanwezig"
+    )
+    n_totaal = sum(len(per_thema) for per_thema in resultaat.values())
+    logging.info("Conceptcodering klaar: %d/%d gemeente-thema-combinaties 'mogelijk aanwezig' "
+                 "(rest niet aangetroffen). GEEN inhoudelijke codering -- zie Leeswijzer-tabblad.",
+                 n_mogelijk_aanwezig, n_totaal)
+
+
 def main():
     parser = argparse.ArgumentParser(description="CVDR-corpus Wmo-mantelzorg pijplijn")
     parser.add_argument("--stap", choices=STAPPEN, help="voer één stap uit")
@@ -214,6 +229,8 @@ def main():
         draai_bijlagen(config)
     elif args.stap == "termen":
         draai_termen(config)
+    elif args.stap == "codering":
+        draai_codering(config)
     elif args.alles:
         logging.error("--alles is nog niet geimplementeerd (stappen worden stap-voor-stap gebouwd)")
         sys.exit(1)

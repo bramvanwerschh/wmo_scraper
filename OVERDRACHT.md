@@ -23,6 +23,21 @@ verordeningen/beleidsregels). Die twee uitbreidingen zijn in eerdere overleggen 
 Bram bewust "module 2" genoemd en zijn in dit project niet gebouwd. Of dat nog moet
 gebeuren voor de volledige Activiteit 1, is een beslissing voor jullie/VWS.
 
+## Startpunt voor de inhoudelijke codering: `codering_conceptscores.xlsx`
+
+In plaats van zelf door `passages.csv` te zoeken, kunnen jullie starten bij
+`data/rapportage/codering_conceptscores.xlsx`: per gemeente en per kernvraag uit het
+analysekader (Positie/Draagkracht/Behoeften/Instrumenten/Jonge mantelzorgers/Kader)
+staat daar een **voorgestelde, trefwoordgebaseerde indicatie** ("mogelijk aanwezig" /
+"niet aangetroffen") met 1-3 onderbouwende passages per gemeente, plus lege kolommen
+`definitieve_code` en `opmerking` om jullie eigen beoordeling in vast te leggen.
+
+**Dit is nadrukkelijk geen inhoudelijke codering** — het is precies dezelfde
+trefwoordmatching als `termenverkenning.xlsx`, alleen herstructureerd per gemeente x
+kernvraag. Lees eerst het "Leeswijzer"-tabblad in het bestand. Genereer het opnieuw
+met `./.venv/bin/python3 run.py --stap codering` (bijv. na aanpassing van de
+termenlijst in `src/termen.py`).
+
 ## Snel starten
 
 1. Lees `README.md` (setup, gebruik, bestandenoverzicht, bekende beperkingen).

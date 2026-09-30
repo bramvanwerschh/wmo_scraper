@@ -3,7 +3,10 @@
 Corpus van geldende Wmo-regelgeving van alle Nederlandse gemeenten (peildatum
 2026-10-01), opgeknipt in passages met behoud van structuur (hoofdstuk > artikel >
 lid, toelichting), voor latere thematische analyse (mantelzorger-positie in het
-keukentafelgesprek). Deze pijplijn scrapet, selecteert en parseert — codeert niet.
+keukentafelgesprek). Deze pijplijn scrapet, selecteert en parseert, en biedt met
+`codering` een eerste, trefwoordgebaseerde suggestie per gemeente x kernvraag ter
+ondersteuning van de handmatige codering — de inhoudelijke codering zelf blijft
+mensenwerk, zie `data/rapportage/codering_conceptscores.xlsx`.
 
 ## Setup
 
@@ -20,9 +23,19 @@ python3.12 -m venv .venv
 ```
 
 Stappen (in volgorde): `gemeenten` → `inventaris` → `selectie` → `ophalen` → `parsen`
-→ `kwaliteit` → `bijlagen` → `termen` (nog te bouwen). **Volgorde is belangrijk:**
+→ `kwaliteit` → `bijlagen` → `termen` → `codering`. **Volgorde is belangrijk:**
 `bijlagen` moet ná `parsen` draaien (voegt pdf-bijlage-passages toe aan een bestand
-dat `parsen` volledig herschrijft), en `kwaliteit` (mogelijk_verouderd) ná `ophalen`.
+dat `parsen` volledig herschrijft), `kwaliteit` (mogelijk_verouderd) ná `ophalen`, en
+`codering` ná `bijlagen` (gebruikt het complete `passages.csv`, inclusief pdf-bijlagen).
+
+`codering` genereert `data/rapportage/codering_conceptscores.xlsx`: per gemeente en
+per kernvraag uit het Ecorys-analysekader (Positie/Draagkracht/Behoeften/
+Instrumenten/Jonge mantelzorgers/Kader) een voorgestelde indicatie ("mogelijk
+aanwezig"/"niet aangetroffen") met onderbouwende passages, plus lege kolommen voor de
+handmatige controle. **Dit is geen inhoudelijke codering** — puur trefwoordmatching
+(dezelfde termenlijst als `termen`/`termenverkenning.xlsx`), bedoeld om Ingeborg en
+Sjoerd een startpunt te geven in plaats van dat zij zelf door `passages.csv` moeten
+zoeken. Zie het "Leeswijzer"-tabblad in het Excel-bestand voor de volledige toelichting.
 
 Selectieregels en vangnettermen staan in `config.yaml`, niet in de code.
 
