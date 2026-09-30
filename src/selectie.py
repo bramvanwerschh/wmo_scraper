@@ -24,8 +24,12 @@ CATEGORIE_NAAM = {
 
 # Aanbod-verfijning (2026-09-25, punt 4): "subsidie" alleen aanbod als de titel ook een
 # sociaal-domeinsignaal bevat, of als er een vangnet-treffer is. Anders -> ruis.
+# \bwmo\b toegevoegd (2026-09-30, gevonden via de A7-website-kruiscontrole): 12
+# subsidieregelingen met "Wmo" letterlijk in de titel (bijv. "Subsidieregeling
+# regionaal innovatiebudget Wmo") vielen onterecht in ruis omdat "wmo" zelf niet
+# in de signaalwoorden stond.
 AANBOD_SOCIAAL_SIGNAAL = re.compile(
-    r"mantelzorg|welzijn|zorg|sociaal|informele|respijt|vrijwillig|ontmoeting", re.IGNORECASE
+    r"mantelzorg|welzijn|zorg|sociaal|informele|respijt|vrijwillig|ontmoeting|\bwmo\b", re.IGNORECASE
 )
 
 # 'buiten_scope' (2026-09-25, punt 3): consistent labelen van twee domeinen die wel

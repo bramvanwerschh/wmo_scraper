@@ -1,0 +1,93 @@
+gemeente,gemeente_code,cvdr_id,versie,titel,categorie_in_selectie
+Voerendaal,GM0986,CVDR696457,2,Omgevingsplan gemeente Voerendaal,ruis
+Voerendaal,GM0986,CVDR345310,1,"Verordening tegenprestatie Participatiewet, IOAW en IOAZ 2015",ruis
+Voerendaal,GM0986,CVDR103967,1,Verordening Wet kinderopvang gemeente Voerendaal,buiten_scope
+Zoeterwoude,GM0638,CVDR763733,1,Verordening Jeugdhulp Zoeterwoude 2026,jeugd
+Zoeterwoude,GM0638,CVDR745738,1,Beleidsregels inburgering Gemeente Zoeterwoude 2025,buiten_scope
+Zoeterwoude,GM0638,CVDR696373,2,Omgevingsplan gemeente Zoeterwoude,ruis
+Zoeterwoude,GM0638,CVDR701607,1,Re-integratieverordening Participatiewet gemeente Zoeterwoude 2023,ruis
+Zoeterwoude,GM0638,CVDR677680,1,Beleidsregels studietoeslag gemeente Zoeterwoude,buiten_scope
+Zoeterwoude,GM0638,CVDR466720,1,"Beleidsregels opstapsubsidie Participatiewet, IOAW en IOAZ gemeente Zoeterwoude 2017",aanbod
+Zoeterwoude,GM0638,CVDR352631,1,"Beleidsregels bijzondere bijstand voor kosten kinderopvang in verband met sociaal
+                              medische indicatie gemeente Zoeterwoude 2013",buiten_scope
+Zoeterwoude,GM0638,CVDR25863,1,Verordening Wet kinderopvang (VWk) gemeente Zoeterwoude,buiten_scope
+Kaag en Braassem,GM1884,CVDR756003,1,Omgevingsvisie Kaag en Braassem,ruis
+Kaag en Braassem,GM1884,CVDR755701,1,"Aanwijzingsbesluit elektronische kanalen publieke dienstverlening Gemeente Kaag en
+                              Braassem 2026",buiten_scope
+Kaag en Braassem,GM1884,CVDR751072,1,Legesverordening 2026,ruis
+Kaag en Braassem,GM1884,CVDR696517,2,Omgevingsplan gemeente Kaag en Braassem,ruis
+Kaag en Braassem,GM1884,CVDR681264,1,Subsidie-uitvraag Opvang Rijnstreek 2023-2026,aanbod
+Kaag en Braassem,GM1884,CVDR606789,1,Verordening Blijverslening Kaag en Braassem 2017,buiten_scope
+Amersfoort,GM0307,CVDR739561,3,Verordening Parkeerbelastingen 2025-2026,ruis
+Amersfoort,GM0307,CVDR722963,6,"Subsidieregeling wijkactiviteiten door vrijwilligers tot en met €2500,-",aanbod
+Amersfoort,GM0307,CVDR763790,1,Besluit Uitgifte Parkeervergunningen Amersfoort,ruis
+Amersfoort,GM0307,CVDR696264,6,Omgevingsplan gemeente Amersfoort,ruis
+Amersfoort,GM0307,CVDR722964,4,Subsidieregeling stedelijke ontmoetingsactiviteiten en lichte ondersteuning,aanbod
+Amersfoort,GM0307,CVDR722962,5,"Subsidieregeling wijkactiviteiten door vrijwilligers vanaf €2500,- of door betaalde
+                              arbeidskracht(en)",aanbod
+Amersfoort,GM0307,CVDR755748,1,Omgevingsprogramma Volkshuisvesting,ruis
+Amersfoort,GM0307,CVDR688804,5,Parkeerverordening Amersfoort,ruis
+Amersfoort,GM0307,CVDR741596,1,Huisvestingsverordening Amersfoort 2025,ruis
+Amersfoort,GM0307,CVDR691069,2,Subsidieregeling Mantelzorgpas 2022,aanbod
+Amersfoort,GM0307,CVDR733377,1,Mandaatbesluit Subsidieregeling Mantelzorgpas 2022,aanbod
+Amersfoort,GM0307,CVDR703427,3,Re-integratieverordening Participatiewet Amersfoort 2023,ruis
+Amersfoort,GM0307,CVDR641613,2,Subsidieregeling Projecten#Indebuurt,aanbod
+Amersfoort,GM0307,CVDR642187,1,Subsidieregeling Mantelzorgpas,aanbod
+Amersfoort,GM0307,CVDR403786,1,Subsidieregeling #InDeBuurt,aanbod
+Amersfoort,GM0307,CVDR660755,1,Beleidsregel huurkorting niet-maatschappelijke huurders,ruis
+Amersfoort,GM0307,CVDR197886,1,Verordening maatschappelijke participatie schoolgaande kinderen,ruis
+Voorst,GM0285,CVDR728353,2,"Verzamelverordening Participatiewet, IOAW, IOAZ gemeente Voorst 2024",ruis
+Voorst,GM0285,CVDR616998,2,Verordening Jeugdhulp gemeente Voorst 2019 (1e wijziging),jeugd
+Voorst,GM0285,CVDR696255,3,Omgevingsplan gemeente Voorst,ruis
+Voorst,GM0285,CVDR679675,1,Beleidsregels studietoeslag gemeente Voorst 2022,buiten_scope
+Bergen (L),GM0893,CVDR757225,1,Huisvestingsverordening Bergen (L) 2026,ruis
+Bergen (L),GM0893,CVDR759024,2,"Aanwijzingsbesluit elektronische kanalen publieke dienstverlening gemeente Bergen
+                              (L) 2026",buiten_scope
+Bergen (L),GM0893,CVDR673161,6,Besluit beschermd wonen en opvang Bergen (L) 2022,buiten_scope
+Bergen (L),GM0893,CVDR704212,3,Subsidieregeling Sociale Cohesie Bergen (L) 2024,aanbod
+Bergen (L),GM0893,CVDR696440,2,Omgevingsplan gemeente Bergen (L),ruis
+Bergen (L),GM0893,CVDR727168,1,Beleidsregel kleine buitenplanse omgevingsplanactiviteit Gemeente Bergen (L),ruis
+Bergen (L),GM0893,CVDR700350,1,Re-integratie Verordening Participatiewet gemeente Bergen (L) 2023,ruis
+Bergen (L),GM0893,CVDR683976,1,Beleidsregels tegenprestatie,buiten_scope
+Bergen (L),GM0893,CVDR671972,1,Beleidsregel landelijke toegang maatschappelijke opvang 2022,buiten_scope
+Bergen (L),GM0893,CVDR492430,1,Verordening tegenprestatie Participatiewet Bergen 2019,ruis
+Bergen (L),GM0893,CVDR404158,1,Beleidsregels landelijke toegankelijkheid en regiobinding maatschappelijke opvang,ruis
+Bergen (L),GM0893,CVDR725429,1,Subsidieregeling regionaal innovatiebudget Wmo,ruis
+Geertruidenberg,GM0779,CVDR696407,2,Omgevingsplan gemeente Geertruidenberg,ruis
+Geertruidenberg,GM0779,CVDR694694,1,Beleidsregels studietoeslag Gemeente Geertruidenberg 2023,ruis
+Geertruidenberg,GM0779,CVDR675181,1,Subsidieregeling basisvoorziening welzijn gemeente Geertruidenberg,aanbod
+Geertruidenberg,GM0779,CVDR765272,1,Omgevingsvisie Geertruidenberg,ruis
+Geertruidenberg,GM0779,CVDR471120,1,Verordening Blijverslening gemeente Geertruidenberg,buiten_scope
+Geertruidenberg,GM0779,CVDR432324,1,"Uitvoeringsbesluit Tegenprestatie inkomensvoorzieningen Participatiewet 2015 gemeente
+                              Geertruidenberg",ruis
+Barendrecht,GM0489,CVDR758009,2,Beleidsregels Jeugdhulp Barendrecht 2026,jeugd
+Barendrecht,GM0489,CVDR758006,1,Verordening Jeugdhulp Barendrecht 2026,jeugd
+Barendrecht,GM0489,CVDR755185,1,Re-integratieverordening Participatiewet Barendrecht,ruis
+Barendrecht,GM0489,CVDR696328,2,Omgevingsplan gemeente Barendrecht,ruis
+Barendrecht,GM0489,CVDR697923,1,Woonvisie 2023-2027,buiten_scope
+Barendrecht,GM0489,CVDR690570,1,Beleidsregels studietoeslag gemeente Barendrecht 2022,buiten_scope
+Barendrecht,GM0489,CVDR659188,1,Algemene Subsidieregeling Barendrecht,aanbod
+Barendrecht,GM0489,CVDR211128,1,Re-integratiebeleid naar arbeidsmarktbeleid in Barendrecht,ruis
+Barendrecht,GM0489,CVDR660734,1,Regionale Nota Bodembeheer,ruis
+Barendrecht,GM0489,CVDR659126,1,Herzien Uitvoeringbeleid Meedoen Barendrecht 2021,ruis
+Barendrecht,GM0489,CVDR652010,1,Verordening Meedoen Barendrecht 2021,ruis
+Leiden,GM0546,CVDR763640,1,Verordening Jeugdhulp gemeente Leiden 2026,jeugd
+Leiden,GM0546,CVDR696352,3,Omgevingsplan gemeente Leiden,ruis
+Leiden,GM0546,CVDR758320,1,Algemeen (Materieel) Controleplan Jeugdwet 2026 Holland Rijnland voor de Leidse regio,jeugd
+Leiden,GM0546,CVDR744111,1,Beleidsregels inburgering Gemeente Leiden 2025,buiten_scope
+Leiden,GM0546,CVDR740175,1,Subsidieregeling vrijwilligersorganisaties Sterke Sociale Basis 2026-2029,aanbod
+Leiden,GM0546,CVDR734007,1,Verordening parkeerbelastingen Leiden 2025,ruis
+Leiden,GM0546,CVDR731829,1,Nadere voorschriften parkeren gemeente Leiden 2025,ruis
+Leiden,GM0546,CVDR722310,1,Parkeerverordening gemeente Leiden 2024,ruis
+Leiden,GM0546,CVDR706023,1,Re-integratieverordening Participatiewet 2023 Leiden,ruis
+Leiden,GM0546,CVDR677674,1,Beleidsregels studietoeslag gemeente Leiden,buiten_scope
+Leiden,GM0546,CVDR677687,1,Beleidsregels bijzondere bijstand 2022,buiten_scope
+Leiden,GM0546,CVDR431041,1,Verordening parkeerbelastingen 2017,ruis
+Leiden,GM0546,CVDR345655,1,"Verordening tegenprestatie Participatiewet, IOAW en IOAZ Leiden 2015",ruis
+Leiden,GM0546,CVDR723407,2,"Regeling Stimuleringslening verduurzaming Ondernemers en Maatschappelijke organisaties
+                              Leiden 2024",ruis
+Leiden,GM0546,CVDR739647,1,Subsidieregeling Maatschappelijke Zorg Leidse Regio 2026 - 2029,aanbod
+Leiden,GM0546,CVDR720904,1,Samenwerkingsovereenkomst maatschappelijke zorg Leidse regio 2023,ruis
+Leiden,GM0546,CVDR719737,1,Samenwerkingsovereenkomst maatschappelijke zorg 2023 Holland Rijnland,ruis
+Leiden,GM0546,CVDR640680,1,Beleidsregels en convenant Landelijke toegankelijkheid maatschappelijke opvang,ruis
+Leiden,GM0546,CVDR631541,1,Subsidieregeling maatschappelijke initiatieven Leiden 2020,ruis

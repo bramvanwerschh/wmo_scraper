@@ -1,0 +1,7 @@
+2026-09-30 08:32:53,410 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-30 08:32:53,410 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260930_083253.log
+2026-09-30 08:32:53,410 | INFO | Stap 6 (kwaliteit/dekking) gestart
+2026-09-30 08:32:59,738 | INFO | mogelijk_verouderd gevlagd: 118 documenten
+2026-09-30 08:32:59,739 | INFO | Dekking klaar voor 342 gemeenten
+2026-09-30 08:32:59,739 | INFO |   zonder verordening: 1 | zonder nadere/beleidsregels: 2
+2026-09-30 08:32:59,739 | INFO | Steekproef getrokken: ['Hilvarenbeek', 'Voerendaal', 'Zoeterwoude', 'Kaag en Braassem', 'Amersfoort', 'Voorst', 'Bergen (L.)', 'Geertruidenberg', 'Barendrecht', 'Leiden']

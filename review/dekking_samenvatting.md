@@ -32,14 +32,14 @@ Totaal aantal gemeenten: 342
 - Westerveld: n_kern=4, n_passages=422, inwoners=20035
 - Montfoort: n_kern=2, n_passages=458, inwoners=13795
 - Rucphen: n_kern=3, n_passages=503, inwoners=23973
-- Gennep: n_kern=8, n_passages=511, inwoners=17953
 - Ommen: n_kern=3, n_passages=534, inwoners=19365
+- Buren: n_kern=4, n_passages=551, inwoners=28095
 
 ## Uitschieters: meeste passages
 
 - Maastricht: n_kern=7, n_passages=7127, inwoners=126026
 - Rotterdam: n_kern=11, n_passages=4182, inwoners=673804
-- Venlo: n_kern=5, n_passages=4010, inwoners=104195
+- Venlo: n_kern=5, n_passages=4058, inwoners=104195
 - Heeze-Leende: n_kern=7, n_passages=3840, inwoners=17281
 - Amsterdam: n_kern=6, n_passages=3317, inwoners=941927
 - Roosendaal: n_kern=11, n_passages=2955, inwoners=78165
