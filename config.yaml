@@ -39,11 +39,25 @@ pilot_gemeenten:
 # analyse-termen (horen bij de latere codering), geen ophaal/selectie-termen, en gaven
 # bovendien veel kruisdomein-ruis (bijv. "Voorbeschermingsregels ..." uit de ruimtelijke
 # ordening, 609 documenten, matchten puur op het woord "overbelast").
+# Aangevuld (2026-09-30) na alignment-check tegen de Ecorys-offerte aan VWS (1008762voo),
+# die deze termenlijst toezegt: "mantelzorg, keukentafelgesprek, draagkracht, draaglast,
+# overbelasting, ondersteuningsbehoefte, respijtzorg, sociaal netwerk en jonge mantelzorger".
+# draaglast/ondersteuningsbehoefte/respijtzorg/sociaal netwerk/jonge mantelzorger toegevoegd.
+# "overbelasting" bewust NIET toegevoegd — Bram herbevestigde op 2026-09-30 de eerdere
+# verwijderreden (zie hierboven). "draagkracht" wél getest en weer verwijderd (2026-09-30):
+# gaf 2.310 pure kruisdomein-ruistreffers (Participatiewet/bijstand/inburgering/
+# leerlingenvervoer, niets met mantelzorg te maken) — hetzelfde patroon als overbelast*,
+# 4x zo groot. Blijft wel staan in src/termen.py STARTLIJST (analyseterm voor de codering).
 vangnet_termen:
   - "mantelzorg*"
   - "\"gebruikelijke hulp\""
   - "\"gebruikelijke zorg\""
   - "keukentafelgesprek"
+  - "draaglast"
+  - "ondersteuningsbehoefte*"
+  - "respijtzorg*"
+  - "\"sociaal netwerk\""
+  - "\"jonge mantelzorger\""
 
 # Selectieregels (§7 stap 3 van de opdracht). Eerste match wint, volgorde van de groepen
 # hieronder is betekenisvol (ruis eerst, kern vóór jeugd voor gecombineerde titels).

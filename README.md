@@ -55,13 +55,17 @@ Draai dit na elke wijziging aan `src/parsen.py`.
 
 ## Bekende beperkingen
 
-- **2,18% van de opgehaalde documenten (128 van 5.880) heeft 0 artikelpassages.**
-  Uitgesplitst: 25 in het nieuwere STOP/LVBB-schema (`<lvbbu:Consolidaties>`, niet
-  ondersteund door deze parser — allemaal categorie `twijfel`, dus geen kern-content
-  gemist); 22 hebben een letterlijk lege `<artikel>` in de brondata; ~81 hebben een
-  leeg `<regeling-tekst>` waarbij de inhoud (vaak een kort mandaatbesluit) volledig in
-  de `<aanhef>` staat — die blijft wel bewaard als aanhef-passage. De striktere
-  maatstaf "documenten met écht nul passages van welke soort dan ook" is **0,46%**.
+- **2,10% van de opgehaalde documenten (137 van 6.513) heeft 0 artikelpassages** (v1.3
+  — was 2,18%/128 van 5.880 in v1.1/v1.2; het aandeel bleef in lijn met de uitbreiding
+  van het corpus). Uitgesplitst: 28 in het nieuwere STOP/LVBB-schema
+  (`<lvbbu:Consolidaties>`, niet ondersteund door deze parser — allemaal categorie
+  `twijfel`, dus geen kern-content gemist); 23 hebben een letterlijk lege `<artikel>`
+  in de brondata; 84 hebben een leeg `<regeling-tekst>` waarbij de inhoud (vaak een
+  kort mandaatbesluit, of bij niet-Wmo-documenten content die volledig buiten
+  `<regeling-tekst>` staat) volledig in de `<aanhef>` staat — die blijft wel bewaard
+  als aanhef-passage; 2 overige gevallen gecontroleerd en verklaard (één document met
+  alleen een lege `<al/>` na de kop, één irrelevant `twijfel`-document met inhoud
+  buiten `<regeling-tekst>`).
 - **Conservatiecheck (som van passagetekens vs. brontekst, exclusief structuurlabels):**
   5,2% van alle documenten en **6,6%** van kern+waardering zit onder 95% (v1.1 — was
   7,8% in v1.0). Belangrijkste resterende oorzaken: (a) inhoud die in externe
@@ -105,6 +109,14 @@ Draai dit na elke wijziging aan `src/parsen.py`.
 - **Toelichting-koppeling** (`koppeling_status`): werkt via artikelnummer, met
   terugval op titelmatch als de toelichting een ander nummer noemt dan de regeling.
   Resteert een klein aantal `koppeling_status='geen'` waar geen van beide lukt.
+- **`vangnet_termen`** (v1.3): uitgebreid na een alignment-check tegen de Ecorys-offerte
+  aan VWS, die een specifieke termenlijst toezegt. `draaglast`, `ondersteuningsbehoefte*`,
+  `respijtzorg*`, `"sociaal netwerk"` en `"jonge mantelzorger"` toegevoegd. `draagkracht`
+  is bewust **niet** toegevoegd: gaf bij toetsing 2.310 pure kruisdomein-ruistreffers
+  (Participatiewet/bijstand/inburgering/leerlingenvervoer) — hetzelfde patroon als
+  `overbelast*`/`belastbaarheid`, die om dezelfde reden al eerder uit de vangnet waren
+  gehaald. `overbelasting` zelf is om die eerdere reden ook niet toegevoegd. Zie
+  `config.yaml` voor de volledige toelichting per term.
 
 Zie `logs/werklog.md` voor de volledige beslissingsgeschiedenis en `review/` voor de
 onderliggende controlebestanden van deze bevindingen.

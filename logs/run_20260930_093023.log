@@ -1,0 +1,27 @@
+2026-09-30 09:30:23,578 | INFO | Configuratie geladen, peildatum=2026-10-01
+2026-09-30 09:30:23,579 | INFO | Logbestand: /Users/bramvanwersch/Projects/wmo_scraper/logs/run_20260930_093023.log
+2026-09-30 09:30:23,579 | INFO | Termenverkenning (stap 7) gestart
+2026-09-30 09:31:16,560 | INFO |   [Positie] mantelzorger + (betrokken|betrekken|uitgenodigd|aanwezig|gesprek|onderzoek): corpus 339 gem./3543 pass. | filter 331 gem./2437 pass.
+2026-09-30 09:31:16,561 | INFO |   [Positie] cliëntondersteuning: corpus 336 gem./2554 pass. | filter 322 gem./1294 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] belastbaarheid: corpus 286 gem./948 pass. | filter 161 gem./297 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] overbelast*: corpus 342 gem./4782 pass. | filter 323 gem./2072 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] draagkracht: corpus 340 gem./3740 pass. | filter 246 gem./872 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] draaglast: corpus 280 gem./1138 pass. | filter 141 gem./277 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] (dreigende) overbelasting: corpus 330 gem./1928 pass. | filter 257 gem./773 pass.
+2026-09-30 09:31:16,561 | INFO |   [Draagkracht] huisarts|medisch advies: corpus 342 gem./6021 pass. | filter 296 gem./1652 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] ondersteuning van de mantelzorger: corpus 243 gem./411 pass. | filter 232 gem./369 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] respijt*: corpus 323 gem./2020 pass. | filter 285 gem./1094 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] logeer*: corpus 304 gem./1361 pass. | filter 234 gem./748 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] dagbesteding: corpus 340 gem./7706 pass. | filter 332 gem./3670 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] mantelzorgondersteuning: corpus 220 gem./808 pass. | filter 156 gem./389 pass.
+2026-09-30 09:31:16,561 | INFO |   [Behoeften] steunpunt: corpus 179 gem./635 pass. | filter 111 gem./310 pass.
+2026-09-30 09:31:16,561 | INFO |   [Instrumenten] EDIZ: corpus 14 gem./14 pass. | filter 5 gem./5 pass.
+2026-09-30 09:31:16,561 | INFO |   [Instrumenten] zelfredzaamheidsmatrix|ZRM: corpus 119 gem./516 pass. | filter 74 gem./239 pass.
+2026-09-30 09:31:16,561 | INFO |   [Instrumenten] vragenlijst: corpus 160 gem./338 pass. | filter 40 gem./51 pass.
+2026-09-30 09:31:16,561 | INFO |   [Instrumenten] gespreksleidraad: corpus 2 gem./3 pass. | filter 1 gem./2 pass.
+2026-09-30 09:31:16,561 | INFO |   [Instrumenten] checklist: corpus 122 gem./293 pass. | filter 40 gem./51 pass.
+2026-09-30 09:31:16,561 | INFO |   [Jonge mantelzorgers] jonge mantelzorger*: corpus 99 gem./281 pass. | filter 70 gem./186 pass.
+2026-09-30 09:31:16,561 | INFO |   [Jonge mantelzorgers] kinderen + gebruikelijke hulp: corpus 335 gem./2786 pass. | filter 312 gem./1264 pass.
+2026-09-30 09:31:16,561 | INFO |   [Jonge mantelzorgers] inwonende kinderen: corpus 330 gem./1397 pass. | filter 282 gem./750 pass.
+2026-09-30 09:31:16,561 | INFO |   [Kader] gelijkgericht*: corpus 2 gem./2 pass. | filter 0 gem./0 pass.
+2026-09-30 09:31:16,561 | INFO |   [Kader] mantelzorgagenda: corpus 4 gem./17 pass. | filter 4 gem./15 pass.
