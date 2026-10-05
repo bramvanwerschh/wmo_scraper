@@ -45,14 +45,21 @@ Azure/Microsoft Foundry-omgeving, `src/ai_codering.py`) heeft de gematchte bront
 per gemeente echt gelezen en geeft per kernvraag aan wat er precies geregeld is, via
 welk documenttype (verordening vs. beleidsregel), met brongegevens om te verifiëren.
 
-Staat op dit moment alleen voor de **10 A7-steekproefgemeenten** in de Teams-zip
-(`data/rapportage/ai_codering_pilot.xlsx`) — door Claude zelf gecontroleerd tegen de
-brontekst (0 verzonnen bronnen, 0 feitelijke fouten in een steekproef van 20 rijen),
-maar dat is geen vervanging voor een onafhankelijke lezer. Lees eerst het
-Leeswijzer-tabblad. Een volledige run over alle 342 gemeenten loopt/is gedraaid (zie
-`data/rapportage/ai_codering_volledig.xlsx` als die er is) — kost ca. €23-25 en ~65
-minuten, en is hervatbaar (`./.venv/bin/python3 run.py --stap ai_codering`, cache in
-`data/raw/ai_codering_cache/`, skipt al verwerkte gemeenten bij een herstart).
+Twee versies, beide in `review/` op GitHub (niet in de Teams-zip nodig — dit zijn
+losse, kleine Excel-bestanden):
+- `ai_codering_pilot.xlsx` — de eerste 10 A7-steekproefgemeenten, door Claude zelf
+  gecontroleerd tegen de brontekst (0 verzonnen bronnen, 0 feitelijke fouten in een
+  steekproef van 20 rijen) — geen vervanging voor een onafhankelijke lezer.
+- `ai_codering_volledig.xlsx` — **alle 342 gemeenten** (2.052 rijen), gedraaid op
+  2026-10-05 op besluit van Bram, vóórdat de onafhankelijke validatie van de pilot was
+  afgerond. 471 aanwezig / 794 gedeeltelijk aanwezig / 787 niet aangetroffen. Kostte
+  ~€24 en ruim een uur (Sonnet 5.5, Ecorys' Azure/Foundry). **Dus: lees eerst het
+  Leeswijzer-tabblad, en behandel dit nog als concept totdat jullie er zelf een
+  steekproef tegen de brontekst op hebben gedaan.**
+
+Opnieuw draaien (bijv. na een promptwijziging): `./.venv/bin/python3 run.py --stap
+ai_codering` — hervatbaar via de cache in `data/raw/ai_codering_cache/`, skipt al
+verwerkte gemeenten bij een herstart (kost dus geen dubbele API-aanroepen/geld).
 
 **Openstaande beslissing voor jullie**: gebruik je dit als eindproduct, of als concept
 dat jullie altijd overschrijven met je eigen oordeel? De offerte zegt aan VWS toe dat
