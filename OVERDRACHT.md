@@ -38,6 +38,27 @@ kernvraag. Lees eerst het "Leeswijzer"-tabblad in het bestand. Genereer het opni
 met `./.venv/bin/python3 run.py --stap codering` (bijv. na aanpassing van de
 termenlijst in `src/termen.py`).
 
+## Een stap verder: inhoudelijke AI-codering (`ai_codering_pilot.xlsx`)
+
+Dit **is** wel een inhoudelijk oordeel: Claude Sonnet 5.5 (via Ecorys' eigen
+Azure/Microsoft Foundry-omgeving, `src/ai_codering.py`) heeft de gematchte brontekst
+per gemeente echt gelezen en geeft per kernvraag aan wat er precies geregeld is, via
+welk documenttype (verordening vs. beleidsregel), met brongegevens om te verifiëren.
+
+Staat op dit moment alleen voor de **10 A7-steekproefgemeenten** in de Teams-zip
+(`data/rapportage/ai_codering_pilot.xlsx`) — door Claude zelf gecontroleerd tegen de
+brontekst (0 verzonnen bronnen, 0 feitelijke fouten in een steekproef van 20 rijen),
+maar dat is geen vervanging voor een onafhankelijke lezer. Lees eerst het
+Leeswijzer-tabblad. Een volledige run over alle 342 gemeenten loopt/is gedraaid (zie
+`data/rapportage/ai_codering_volledig.xlsx` als die er is) — kost ca. €23-25 en ~65
+minuten, en is hervatbaar (`./.venv/bin/python3 run.py --stap ai_codering`, cache in
+`data/raw/ai_codering_cache/`, skipt al verwerkte gemeenten bij een herstart).
+
+**Openstaande beslissing voor jullie**: gebruik je dit als eindproduct, of als concept
+dat jullie altijd overschrijven met je eigen oordeel? De offerte zegt aan VWS toe dat
+"onderzoekers de resultaten coderen" — hou daar rekening mee, en vergeet de
+AI-verantwoording niet (zie onderaan).
+
 ## Snel starten
 
 1. Lees `README.md` (setup, gebruik, bestandenoverzicht, bekende beperkingen).
@@ -46,9 +67,14 @@ termenlijst in `src/termen.py`).
    (dit is ook letterlijk de door het plan gevraagde overdrachtstoets — graag even
    bevestigen dat dit bij jullie lukt.)
 3. Draai de tests: `./.venv/bin/python3 -m pytest tests/ -v` (moet 16/16 groen geven).
-4. Het corpus zelf (`data/`) staat **niet** in git (te groot, .gitignore) — dat staat
-   lokaal bij Bram. Vraag hem om `data/` te kopiëren, of draai de pijplijn opnieuw
-   (alles is hervatbaar via de cache in `data/raw/`, kost geen nieuwe verzoeken).
+4. Het corpus zelf (`data/`) staat **niet** in git (te groot, .gitignore — 1,3GB,
+   `passages.csv` alleen al 382MB, ruim boven GitHub's harde 100MB-limiet per bestand).
+   Staat wel op **Teams: Onderzoek positie mantelzorgers > Webscraper >
+   `wmo_scraper_Data_v1.3.zip`**. Uitpakken zodat `data/` naast de gecloonde repo komt
+   te staan. Bevat ook de AI-codering: `data/rapportage/ai_codering_pilot.xlsx` is de
+   eerste, afgeronde AI-analyse (10 steekproefgemeenten, inhoudelijk — zie hieronder).
+   Alternatief: draai de pijplijn zelf opnieuw (alles is hervatbaar via de cache in
+   `data/raw/`, kost geen nieuwe verzoeken voor wat al opgehaald is).
 
 ## Belangrijkste openstaande aandachtspunten voor de analysefase
 
