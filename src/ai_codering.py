@@ -191,7 +191,50 @@ def draai_pilot(config: dict, gemeenten_namen: list[str] | None = None) -> dict[
     A7-steekproefgemeenten). Kost echte API-aanroepen/geld -- niet voor de volledige
     342 gemeenten zonder expliciet besluit na validatie van deze pilot."""
     gemeenten_namen = gemeenten_namen or STEEKPROEFGEMEENTEN_A7
+    resultaat, fouten = _draai(config, gemeenten_namen)
+    if fouten:
+        raise RuntimeError(f"Pilot-fouten bij: {fouten}")
+    return resultaat
 
+
+def draai_alle_gemeenten(config: dict) -> tuple[dict[str, GemeenteCodering], list[str]]:
+    """Volledige run over alle 342 gemeenten. Kost echte API-aanroepen/geld (~EUR 23-25,
+    Sonnet 5.5, ~60-65 min). Per-gemeente foutafhandeling: een mislukte aanroep stopt de
+    run niet, de naam komt in de teruggegeven foutenlijst terecht (logging per 10
+    gemeenten voor voortgang bij een lange achtergrondrun)."""
+    with open(ROOT / config["paden"]["gemeenten_csv"], encoding="utf-8") as f:
+        alle_namen = [g["gemeente_naam_cbs"] for g in csv.DictReader(f)]
+    return _draai(config, alle_namen, log_voortgang=True)
+
+
+CACHE_DIR = "data/raw/ai_codering_cache"
+
+
+def _cache_pad(code: str) -> Path:
+    return ROOT / CACHE_DIR / f"{code}.json"
+
+
+def _laad_cache(code: str) -> GemeenteCodering | None:
+    pad = _cache_pad(code)
+    if not pad.exists():
+        return None
+    return GemeenteCodering.model_validate_json(pad.read_text(encoding="utf-8"))
+
+
+def _schrijf_cache(code: str, codering: GemeenteCodering):
+    pad = _cache_pad(code)
+    pad.parent.mkdir(parents=True, exist_ok=True)
+    pad.write_text(codering.model_dump_json(), encoding="utf-8")
+
+
+def _draai(
+    config: dict, gemeenten_namen: list[str], log_voortgang: bool = False
+) -> tuple[dict[str, GemeenteCodering], list[str]]:
+    """Hervatbaar: elk gemeente-resultaat wordt direct na de API-aanroep weggeschreven
+    naar data/raw/ai_codering_cache/<code>.json (zelfde cache-filosofie als de rest van
+    de pijplijn). Bij een onderbroken run (crash, tijdslimiet, laptop dicht) kost een
+    herstart alleen nieuwe API-aanroepen voor de gemeenten die nog geen cachebestand
+    hebben -- geen dubbel werk, geen dubbele kosten."""
     with open(ROOT / config["paden"]["gemeenten_csv"], encoding="utf-8") as f:
         gemeenten = list(csv.DictReader(f))
     naam_naar_code = {g["gemeente_naam_cbs"]: g["gemeente_code"] for g in gemeenten}
@@ -201,29 +244,65 @@ def draai_pilot(config: dict, gemeenten_namen: list[str] | None = None) -> dict[
 
     client = _client()
     resultaat: dict[str, GemeenteCodering] = {}
-    for naam in gemeenten_namen:
+    fouten: list[str] = []
+    n_uit_cache = 0
+    for i, naam in enumerate(gemeenten_namen, start=1):
         code = naam_naar_code[naam]
-        passages = [p for p in alle_passages if p["gemeente_code"] == code]
-        resultaat[naam] = codeer_gemeente(client, naam, passages)
-    return resultaat
+        cache_treffer = _laad_cache(code)
+        if cache_treffer is not None:
+            resultaat[naam] = cache_treffer
+            n_uit_cache += 1
+        else:
+            passages = [p for p in alle_passages if p["gemeente_code"] == code]
+            try:
+                codering = codeer_gemeente(client, naam, passages)
+                _schrijf_cache(code, codering)
+                resultaat[naam] = codering
+            except Exception as e:
+                fouten.append(naam)
+                if log_voortgang:
+                    print(f"  FOUT bij {naam}: {e}", flush=True)
+        if log_voortgang and i % 10 == 0:
+            print(f"  {i}/{len(gemeenten_namen)} verwerkt ({n_uit_cache} uit cache, {len(fouten)} fouten)", flush=True)
+    return resultaat, fouten
 
 
-def schrijf_pilot_xlsx(config: dict, resultaat: dict[str, GemeenteCodering], pad: Path | None = None):
+def schrijf_pilot_xlsx(
+    config: dict, resultaat: dict[str, GemeenteCodering], pad: Path | None = None,
+    volledig: bool = False, fouten: list[str] | None = None,
+):
     wb = openpyxl.Workbook()
     ws_lees = wb.active
     ws_lees.title = "Leeswijzer"
+    if volledig:
+        titel = "AI-CODERING -- ALLE GEMEENTEN (Claude Sonnet 5.5, Ecorys Azure/Foundry)"
+        scope_regel = (
+            f"DIT IS DE VOLLEDIGE RUN (alle {len(resultaat)} gemeenten), op besluit van Bram "
+            "(2026-10-05) om door te gaan zodat Ingeborg/Sjoerd hiermee aan de slag kunnen, "
+            "ook al is de pilot-validatie door een onafhankelijke lezer nog niet afgerond. "
+            "Claude's eigen steekproefcontrole (20 rijen van de 10-gemeenten-pilot, tegen de "
+            "volledige brontekst) gaf 0 fouten -- geen vervanging voor een onafhankelijke "
+            "lezer, wel een reden om door te gaan."
+        )
+        if fouten:
+            scope_regel += f" MISLUKT voor {len(fouten)} gemeente(n): {', '.join(fouten)}."
+    else:
+        titel = "AI-CODERING PILOT (Claude Sonnet 5.5, Ecorys Azure/Foundry)"
+        scope_regel = (
+            "DIT IS EEN PILOT OP 10 GEMEENTEN. Voordat dit wordt opgeschaald naar alle 342 "
+            "gemeenten, moet elke rij hier gecontroleerd worden tegen de brontekst (kolommen "
+            "'gevalideerd_door' en 'opmerking_validatie' invullen). Bij systematische fouten: "
+            "prompt aanpassen en pilot herhalen voordat wordt opgeschaald."
+        )
     leeswijzer = [
-        "AI-CODERING PILOT (Claude Sonnet 5.5, Ecorys Azure/Foundry)",
+        titel,
         "",
         "Dit IS een inhoudelijke beoordeling (i.t.t. codering_conceptscores.xlsx, dat pure "
         "trefwoordmatching is). Het model heeft de gematchte brontekst per gemeente echt "
         "gelezen en per kernvraag een oordeel gegeven: wat is geregeld, via welk "
         "documenttype, met brongegevens erbij.",
         "",
-        "DIT IS EEN PILOT OP 10 GEMEENTEN. Voordat dit wordt opgeschaald naar alle 342 "
-        "gemeenten, moet elke rij hier gecontroleerd worden tegen de brontekst (kolommen "
-        "'gevalideerd_door' en 'opmerking_validatie' invullen). Bij systematische fouten: "
-        "prompt aanpassen en pilot herhalen voordat wordt opgeschaald.",
+        scope_regel,
         "",
         "Brongegevens: data/passages.csv. Zelfde termenlijst/FILTER-scope als "
         "termenverkenning.xlsx en codering_conceptscores.xlsx (src/termen.py).",

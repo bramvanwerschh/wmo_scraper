@@ -47,7 +47,7 @@ from src.rapportage_selectie import (
 )
 from src.selectie import schrijf_conflicten_csv, schrijf_selectie_csv, selecteer
 
-STAPPEN = ["gemeenten", "inventaris", "selectie", "ophalen", "parsen", "kwaliteit", "bijlagen", "termen", "codering"]
+STAPPEN = ["gemeenten", "inventaris", "selectie", "ophalen", "parsen", "kwaliteit", "bijlagen", "termen", "codering", "ai_codering"]
 
 
 def zet_logging_op(config: dict) -> Path:
@@ -181,6 +181,17 @@ def draai_termen(config: dict):
                          r["filter"]["n_gemeenten"], r["filter"]["n_passages"])
 
 
+def draai_ai_codering(config: dict):
+    logging.info("AI-codering (volledig, alle gemeenten) gestart -- kost echte API-aanroepen/geld")
+    from src.ai_codering import draai_alle_gemeenten, schrijf_pilot_xlsx
+    resultaat, fouten = draai_alle_gemeenten(config)
+    pad = ROOT / config["paden"]["rapportage"] / "ai_codering_volledig.xlsx"
+    schrijf_pilot_xlsx(config, resultaat, pad=pad, volledig=True, fouten=fouten)
+    logging.info("AI-codering klaar: %d gemeenten verwerkt, %d fouten", len(resultaat), len(fouten))
+    if fouten:
+        logging.warning("Mislukt voor: %s", fouten)
+
+
 def draai_codering(config: dict):
     logging.info("Conceptcodering (eerste-ronde, trefwoordgebaseerd) gestart")
     resultaat = genereer_conceptcodering(config)
@@ -231,6 +242,8 @@ def main():
         draai_termen(config)
     elif args.stap == "codering":
         draai_codering(config)
+    elif args.stap == "ai_codering":
+        draai_ai_codering(config)
     elif args.alles:
         logging.error("--alles is nog niet geimplementeerd (stappen worden stap-voor-stap gebouwd)")
         sys.exit(1)
